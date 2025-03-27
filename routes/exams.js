@@ -20,5 +20,17 @@ router.get('/', (req, res) => {
     exams.push(newExam);
     res.status(201).json(newExam);
     });
+    // PUT /exams/:id - Updates an exam
+router.put('/:id', (req, res) => {
+    const examId = parseInt(req.params.id);
+    const exam = exams.find(ex => ex.id === examId);
+    
+    if (!exam) {
+    return res.status(404).json({ message: "Exam not found" });
+    }
+    
+    exam.name = req.body.name || exam.name;
+    res.json({ message: "Exam updated", exam });
+    });
 
 module.exports = router;
